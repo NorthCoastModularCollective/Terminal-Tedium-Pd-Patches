@@ -1,0 +1,107 @@
+#N canvas 1454 120 938 1260 10;
+#X obj 301 168 adc~;
+#X obj 301 202 dac~;
+#X text 335 168 <--Audio input;
+#X text 347 201 <-- Audio output;
+#X obj 282 24 loadbang;
+#X obj 282 51 delay 300;
+#X msg 282 77 \; pd dsp 1 \;;
+#X obj 232 339 terminal_tedium_adc, f 22;
+#X msg 212 296 open;
+#X obj 272 297 metro 10;
+#X text 380 267 <-This is the 6 CV inputs <-"open" initializes the
+object <- the tt adc object only sends CV values on bang. That's why
+there's a metro above it. You can use this to your advantage for cases
+where you want to sample CV only on specific events;
+#X obj 78 456 tedium_input 23;
+#X text 199 457 <- button 1 in;
+#X text 199 507 <- button 2 in;
+#X text 200 557 <- button 3 in;
+#X obj 332 822 tedium_input 4;
+#X obj 334 862 tedium_input 17;
+#X text 453 908 <- CV gate 3 in;
+#X text 449 957 <- CV gate 4 in;
+#X text 453 865 <- CV gate 2 in;
+#X text 448 822 <- CV gate 1 in;
+#X obj 80 613 f;
+#X obj 119 612 + 1;
+#X obj 80 641 % 2;
+#X floatatom 80 671 5 0 0 0 - - -, f 5;
+#X obj 333 1091 tedium_output 16;
+#X obj 334 1127 tedium_output 12;
+#X obj 304 1377 tedium_output 26;
+#X text 420 1375 <- button 3 LED out;
+#X text 445 1092 <- CV Gate 1 out;
+#X text 449 1128 <- CV Gate 2 out;
+#X text 326 1057 For the outputs \, 0 is off \, 1 is on;
+#X obj 302 1232 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 331 1307 0;
+#X obj 331 1285 pipe 50;
+#X msg 303 1260 1;
+#X obj 335 905 tedium_input 14;
+#X obj 335 954 tedium_input 27;
+#X obj 79 506 tedium_input 25;
+#X obj 78 557 tedium_input 24;
+#X text 390 510 -- OR --;
+#X text 241 393 --------------------------Buttons--------------------
+;
+#X text 20 421 tedium_input will produce a bang when a button is pressed
+;
+#X text 462 418 tedium_switch will produce button push status and length
+(in ms) of press.;
+#X obj 501 456 tedium_switch 23;
+#X obj 502 505 tedium_switch 25;
+#X obj 504 554 tedium_switch 24;
+#X text 616 455 <- button 1 in;
+#X text 616 505 <- button 2 in;
+#X text 617 555 <- button 3 in;
+#X floatatom 505 638 5 0 0 0 - - -, f 5;
+#X floatatom 598 595 5 0 0 0 - - -, f 5;
+#X text 650 595 <- button status: 1 = pushed \, 0 = released;
+#X text 550 637 <- time (in milliseconds) the button is held down;
+#X text 259 773 ---------------------CV Gate Input--------------------
+;
+#X text 230 234 ----------------------CV Input------------------------
+;
+#X text 238 141 ----------------------Audio------------------------
+;
+#X text 255 1014 --------------------CV Gate Output-------------------
+;
+#X text 249 1177 --------------------Button 3 LED Output-------------------
+;
+#X text 395 1229 <- This bit of code takes one bang and turns it into
+a 50ms gate (trigger) output and works with any of the outputs (CV
+Gate \, etc.) <- <-;
+#X text 617 1059 Note: the two LEDs next to the gate outputs are linked
+to the gate CV outputs. For example \, sending output to CV Gate 1
+will also light the LED next to CV Gate 1;
+#X text 163 613 <- this bit of code can be used to translate the buton
+or CV gate inputs (bangs) into a toggle. <- 0 is off \, 1 is on. one
+press turns it to 1 \, another press turns it to 0 \, another press
+back to 1 \, etc.;
+#X text 372 22 <- <- this turns on DSP it's delayed to make <- sure
+Pd is ready;
+#X obj 197 79 s initbang;
+#X obj 231 259 r initbang;
+#X text 34 78 Send bang to ADC after DSP is on;
+#X text 22 258 Start this after DSP is on ->;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 5 0 63 0;
+#X connect 8 0 7 0;
+#X connect 9 0 7 0;
+#X connect 21 0 22 0;
+#X connect 21 0 23 0;
+#X connect 22 0 21 1;
+#X connect 23 0 24 0;
+#X connect 32 0 35 0;
+#X connect 33 0 27 0;
+#X connect 34 0 33 0;
+#X connect 35 0 27 0;
+#X connect 35 0 34 0;
+#X connect 39 0 21 0;
+#X connect 46 0 50 0;
+#X connect 46 1 51 0;
+#X connect 64 0 9 0;
+#X connect 64 0 8 0;
